@@ -1,0 +1,16 @@
+name: Node Continuous Integration
+
+on:
+  pull_requests:
+    branches: [master]
+
+jobs:
+  test_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-versions: 10
+      - run: npm cin
+      - run: npm run dev

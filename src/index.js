@@ -18,6 +18,24 @@ app.get("/", (req, res) => {
   })
 })
 
+//NOT FOUND PAGE
+
+app.use((req, res, next) => {
+  const error = new Error(`Not found ${req.originalUrl}`);
+  res.status(404);
+  next(error)
+})
+
+app.use((error, req, res, next) => {
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  res.status(statusCode).json({
+    message: error.message,
+    stack: process.env.NODE_ENV === 'production' ? `wrong happened` : error.stack
+  })
+})
+
+
+
 
 const PORT = process.env.port || 5000;
 app.listen(PORT, () => {

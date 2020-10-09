@@ -3,8 +3,19 @@ const express = require('express')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const cors = require('cors')
+const mongoose = require('mongoose')
+require('dotenv').config()
 const middlewares = require('./middlewares')
 const app = express();
+
+mongoose.connect(process.env.DATABASE, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(con => {
+  console.log('DB connected succfully')
+}).catch(err => {
+  console.log('Error :', err)
+})
 
 app.use(morgan('common'));
 app.use(helmet())
